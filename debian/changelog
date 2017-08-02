@@ -1,3 +1,9 @@
+bashism (0.0.3) UNRELEASED; urgency=medium
+
+  * Added hostnamePingable injectable
+
+ -- Jiří Kozlovský <bashism@jkozlovsky.cz>  Thu, 03 Aug 2017 01:20:14 +0200
+
 bashism (0.0.2) unstable; urgency=medium
 
   * Added support for multiple arguments to inject

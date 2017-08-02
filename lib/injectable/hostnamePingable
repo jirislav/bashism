@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Bashism "hostnamePingable" function. Copyright (c) 2017, Jiri Kozlovsky
+
+# Multiple injection protection
+if test -z $_HOSTNAME_PINGABLE; then
+        _HOSTNAME_PINGABLE=0
+                                                                                                                     
+        hostnamePingable() {
+		ping -c1 -W1 "$1" &>/dev/null
+        }
+
+	export -f hostnamePingable
+fi
