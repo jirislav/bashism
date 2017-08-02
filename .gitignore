@@ -1,4 +1,4 @@
-build
+/build/*
 debian/bashism.debhelper.log
 debian/bashism.substvars
 debian/bashism/
