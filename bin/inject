@@ -39,39 +39,38 @@ loadDependencies() {
 }
 
 main() {
-	# Return non-zero status code if other than one argument provided
-	if test "$#" -ne 1; then
-		echo "Wrong 'inject' implementation - exactly one argument must be supplied !" >&2
-		/bin/false
-	else
-		_inject "$@"
-	fi
+	# this script must be sourced to take effect ..
+	assertIsSourced "$@" || exit 2
+
+	# even inject script has some dependencies
+	loadDependencies
+
+	# start injecting ..
+	_inject "$@"
 }
 
 _inject() {
 	local _LOCAL_DEST _STD_DEST
 
-	_LOCAL_DEST="${LOCALLIB}/$1"
-	_GLOBAL_DEST="${LOCALLIB}/$1"
-	_STD_DEST="${STDLIB}/$1"
+	for _DESIRED_INJECTABLE in $@; do
+		_LOCAL_DEST="${LOCALLIB}/$_DESIRED_INJECTABLE"
+		_GLOBAL_DEST="${LOCALLIB}/$_DESIRED_INJECTABLE"
+		_STD_DEST="${STDLIB}/$_DESIRED_INJECTABLE"
 
-	if isBashScript "$_GLOBAL_DEST"; then
-		source "$_GLOBAL_DEST"
-	elif isBashScript "$_LOCAL_DEST"; then
-		source "$_LOCAL_DEST"
-	elif isBashScript "$_STD_DEST"; then
-		source "$_STD_DEST"
-	else
-		echo "Function '$1' not found !" >&2
-		/bin/false
-	fi
+		if isBashScript "$_GLOBAL_DEST"; then
+			source "$_GLOBAL_DEST"
+		elif isBashScript "$_LOCAL_DEST"; then
+			source "$_LOCAL_DEST"
+		elif isBashScript "$_STD_DEST"; then
+			source "$_STD_DEST"
+		else
+			echo "Desired injectable '$_DESIRED_INJECTABLE' not found !" >&2
+			/bin/false
+			break
+		fi
+	done
 }
 
-# this script must be sourced to take effect ..
-assertIsSourced "$@" || exit 2
-
-# even inject script has some dependencies
-loadDependencies
 
 # run the injection ..
 main "$@"
