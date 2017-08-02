@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Bashism "commandExists" function. Copyright (c) 2017, Jiri Kozlovsky
+
+# Multiple injection protection
+if test -z $_COMMAND_EXISTS; then
+        _COMMAND_EXISTS=0
+                                                                                                                     
+        commandExists() {
+		command -v $@ >/dev/null
+        }
+
+	export -f commandExists
+fi

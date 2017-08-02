@@ -1,0 +1,12 @@
+Source: bashism
+Section: shells
+Priority: extra
+Maintainer: Jiri Kozlovsky <bashism@jkozlovsky.cz>
+Standards-Version: 3.9.4
+
+Package: bashism
+Architecture: all
+Depends:
+ bash
+Description: Installs bash scripting productivity tools
+ See README on GitHub jirislav/bashism

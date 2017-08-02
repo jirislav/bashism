@@ -1,0 +1,26 @@
+#!/usr/bin/env bash                                                                                                  
+# Bashism "isBashScript" function. Copyright (c) 2017, Jiri Kozlovsky
+
+# File must exist & must have on its' first line one of the following headers:
+#!/usr/bin/env bash
+#!/bin/bash
+
+
+# Multiple injection protection
+if test -z $_IS_BASH_SCRIPT; then
+        _IS_BASH_SCRIPT=0
+
+        isBashScript() {
+		local HEADER
+
+                if test -f "$1"; then
+			HEADER=`head -1 "$1"`
+			echo "$HEADER" | egrep -o "#\!(/bin/bash|/usr/bin/env bash)" >/dev/null
+		else
+			/bin/false
+		fi
+        }
+
+	export -f isBashScript
+
+fi

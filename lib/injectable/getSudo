@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Bashism "getSudo" function. Copyright (c) 2017, Jiri Kozlovsky
+
+#
+# All the arguments will be used to prompt user for sudo ..
+#
+
+
+# Multiple injection protection
+if test -z $_GET_SUDO; then
+	_GET_SUDO=0
+
+	. inject commandExists
+
+	getSudo() {
+		if test $USER != root; then
+			if test -z "$1"; then
+				echo "I'm going to ask you for your sudo password ..."
+			else
+				echo $@
+			fi
+			sudo echo "Thanks for the sudo !"
+		fi
+	}
+
+	if ! commandExists sudo; then
+		unset -f getSudo
+
+		# Return value
+		echo "Command 'sudo' does not exist, so cannot create function for getting sudo !" >&2
+		/bin/false
+	else
+		export -f getSudo
+	fi
+fi

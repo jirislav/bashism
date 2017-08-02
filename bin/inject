@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Bashism inject. Copyright (c) 2017, Jiri Kozlovsky
+
+# Usage in scripts:
+#
+# inject FUNCTION_NAME
+#
+
+# Note that FUNCTION_NAME is a function stored in either /usr/lib/bashism/injectable/ 
+# or when created by current user from /usr/local/lib/bashism/injectable
+# 
+# First is checked the local directory (in case of a script override)
+
+# Try for example "inject getSudo" - this will inject getSudo function, which will
+# attempt to obtain sudo from user launching your script (your script gets return code)
+
+
+STDLIB="/usr/lib/bashism/injectable"
+LOCALLIB="/usr/local/lib/bashism/injectable"
+
+#
+# Now load all injection libs needed
+#
+if test -z $_INJECTION_LIBS_LOADED; then
+	_INJECTION_LIBS_LOADED=0
+
+	# Load up BASH script detection
+	source "$STDLIB/isBashScript"
+fi
+
+main() {
+	# Return non-zero status code if other than one argument provided
+	if test "$#" -ne 1; then
+		echo "Wrong 'inject' implementation - exactly one argument must be supplied !" >&2
+		/bin/false
+	else
+		_inject "$@"
+	fi
+}
+
+_inject() {
+	local _LOCAL_DEST _STD_DEST
+
+	_LOCAL_DEST="${LOCALLIB}/$1"
+	_STD_DEST="${STDLIB}/$1"
+
+	if isBashScript "$_LOCAL_DEST"; then
+		source "$_LOCAL_DEST"
+	elif isBashScript "$_STD_DEST"; then
+		source "$_STD_DEST"
+	else
+		echo "Function '$1' not found !" >&2
+		/bin/false
+	fi
+}
+
+main "$@"
