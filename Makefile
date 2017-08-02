@@ -15,6 +15,7 @@ CONF=$(DESTDIR)/etc/$(COMPONENT)
 all:
 
 deb:
+	if test ! -d build; then mkdir build; fi
 	dpkg-buildpackage -b -rfakeroot -uc -us && mv ../$(COMPONENT_MASK)* build
 
 install:
