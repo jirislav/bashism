@@ -7,7 +7,8 @@
 #
 
 # Note that FUNCTION_NAME is a function stored in either /usr/lib/bashism/injectable/ 
-# or when created by current user from /usr/local/lib/bashism/injectable
+# or when created by superuser at /usr/local/lib/bashism/injectable for global use
+# or created by current user in it's home directory ~/.bashism/injectable
 # 
 # First is checked the local directory (in case of a script override)
 
@@ -16,17 +17,26 @@
 
 
 STDLIB="/usr/lib/bashism/injectable"
-LOCALLIB="/usr/local/lib/bashism/injectable"
+GLOBALLIB="/usr/local/lib/bashism/injectable"
+LOCALLIB="~/.bashism/injectable"
 
-#
-# Now load all injection libs needed
-#
-if test -z $_INJECTION_LIBS_LOADED; then
-	_INJECTION_LIBS_LOADED=0
+assertIsSourced() {
+	if test "${BASH_SOURCE[0]}" = "${0}"; then
+		echo "You must source inject - using this syntax:" >&2
+		echo ". inject $@" >&2
+		return 1
+	fi
+	return 0
+}
 
-	# Load up BASH script detection
-	source "$STDLIB/isBashScript"
-fi
+loadDependencies() {
+	if test -z $_INJECTION_LIBS_LOADED; then
+		_INJECTION_LIBS_LOADED=0
+
+		# Load up BASH script detection
+		. "$STDLIB/isBashScript"
+	fi
+}
 
 main() {
 	# Return non-zero status code if other than one argument provided
@@ -42,9 +52,12 @@ _inject() {
 	local _LOCAL_DEST _STD_DEST
 
 	_LOCAL_DEST="${LOCALLIB}/$1"
+	_GLOBAL_DEST="${LOCALLIB}/$1"
 	_STD_DEST="${STDLIB}/$1"
 
-	if isBashScript "$_LOCAL_DEST"; then
+	if isBashScript "$_GLOBAL_DEST"; then
+		source "$_GLOBAL_DEST"
+	elif isBashScript "$_LOCAL_DEST"; then
 		source "$_LOCAL_DEST"
 	elif isBashScript "$_STD_DEST"; then
 		source "$_STD_DEST"
@@ -54,4 +67,11 @@ _inject() {
 	fi
 }
 
+# this script must be sourced to take effect ..
+assertIsSourced "$@" || exit 2
+
+# even inject script has some dependencies
+loadDependencies
+
+# run the injection ..
 main "$@"

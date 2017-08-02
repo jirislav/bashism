@@ -1,6 +1,5 @@
 /build/*
-debian/bashism.debhelper.log
-debian/bashism.substvars
+debian/bashism.*
 debian/bashism/
 debian/debhelper-build-stamp
 debian/files

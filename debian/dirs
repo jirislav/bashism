@@ -1,4 +1,5 @@
 /usr/bin
 /usr/lib/bashism/injectable
+/usr/local/lib/bashism/injectable
 /var/lib/bashism
 /etc/bashism
