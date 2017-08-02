@@ -10,7 +10,12 @@ Inject is a bash dependency injector, which handles injecting/importing/using an
 
 You may create your own injectable library easily!
 
-Example:
+It is similar to `source`, but there is no need to specify a path to a script. Injected dependency is instead looked up in a series of directories in this order:
+- ~/.bashism/injectable/
+- /usr/local/lib/bashism/injectable/
+- /usr/lib/bashism/injectable/
+
+Example for global injectable:
 ```
 sudo tee -a /usr/local/lib/bashism/injectable/joke <<EOF
 #!/bin/bash
@@ -32,7 +37,33 @@ $ joke
 Chuck Norris sheds his skin twice a year.
 ```
 
-### Built in dependencies
+Example for user only injectable:
+```
+mkdir ~/.bashism/injectable -p
+tee -a ~/.bashism/injectable/secret-weapon <<EOF
+#!/bin/bash
+
+iwonttellyou() {
+	echo "------------------------"
+	echo " My top secret weapon ! "
+	echo "------------------------"
+	sleep 2
+	ps faux | grep "ssh" -A15 --color
+}
+EOF
+```
+
+Afterwards it may be injected into any BASH only under current user:
+```
+. inject secret-weapon
+```
+
+And used:
+```
+iwonttellyou
+```
+
+### Built in injectables
 
 - getSudo
 - isBashScript
