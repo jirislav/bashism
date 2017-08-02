@@ -3,7 +3,7 @@
 
 # Usage in scripts:
 #
-# inject FUNCTION_NAME
+# . inject FUNCTION_NAME
 #
 
 # Note that FUNCTION_NAME is a function stored in either /usr/lib/bashism/injectable/ 
@@ -11,7 +11,7 @@
 # 
 # First is checked the local directory (in case of a script override)
 
-# Try for example "inject getSudo" - this will inject getSudo function, which will
+# Try for example ". inject getSudo" - this will inject getSudo function, which will
 # attempt to obtain sudo from user launching your script (your script gets return code)
 
 
