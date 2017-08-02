@@ -77,9 +77,9 @@ Example:
 . inject isBashScript
 
 if isBashScript /usr/lib/bashism/injectable/getSudo; then
-echo "Wow! getSudo injectable is a BASH script !"
+	echo "Wow! getSudo injectable is a BASH script !"
 else
-echo "Hmm, this is not a bash script, sorry !"
+	echo "Hmm, this is not a bash script, sorry !"
 fi
 ```
 
@@ -94,9 +94,9 @@ Example:
 . inject commandExists
 
 if commandExists curl; then
-echo "Whoa! Let's curl some pages!"
+	echo "Whoa! Let's curl some pages!"
 else
-echo "Hmm, how about this?:"
-echo "sudo apt-get install curl -y"
+	echo "Hmm, how about this?:"
+	echo "sudo apt-get install curl -y"
 fi
 ```
