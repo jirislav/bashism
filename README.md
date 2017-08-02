@@ -100,3 +100,28 @@ else
 	echo "sudo apt-get install curl -y"
 fi
 ```
+
+## Installation
+
+### Build from sources
+Install only debian building package
+```
+sudo apt-get install dpkg-dev
+```
+
+Run the build
+```
+make deb
+```
+
+The package can be found in `build` directory.
+
+Or install the package right after it's build
+```
+make localtest
+```
+
+
+### Download builded package
+
+Visit [releases page](https://github.com/jirislav/bashism/releases)
