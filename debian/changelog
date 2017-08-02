@@ -1,5 +1,5 @@
-bashism (0.0.1) UNRELEASED; urgency=medium
+bashism (0.0.1) unstable; urgency=medium
 
-  * Initial release.
+  * Implemented inject script
 
- -- Jiří Kozlovský <bashism@jkozlovsky.cz>  Wed, 02 Aug 2017 20:46:51 +0200
+ -- Jiří Kozlovský <bashism@jkozlovsky.cz>  Thu, 03 Aug 2017 00:03:31 +0200
