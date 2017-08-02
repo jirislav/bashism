@@ -12,7 +12,7 @@ You may create your own injectable library easily!
 
 Example:
 ```
-sudo tee -a /usr/local/lib/bashism/injectable/joke <<<EOF
+sudo tee -a /usr/local/lib/bashism/injectable/joke <<EOF
 #!/bin/bash
 
 joke() {
