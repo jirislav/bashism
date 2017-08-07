@@ -6,6 +6,9 @@ Standards-Version: 3.9.4
 
 Package: bashism
 Architecture: all
+Build-Depends:
+ pandoc,
+ gzip
 Depends:
  bash
 Description: Installs bash scripting productivity tools

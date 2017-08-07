@@ -1,8 +1,8 @@
-bashism (0.0.3) UNRELEASED; urgency=medium
+bashism (0.1.0) UNRELEASED; urgency=medium
 
-  * Added hostnamePingable injectable
+  * Added man pages for inject
 
- -- Jiří Kozlovský <bashism@jkozlovsky.cz>  Thu, 03 Aug 2017 01:20:14 +0200
+ -- Jiří Kozlovský <bashism@jkozlovsky.cz>  Mon, 07 Aug 2017 13:17:29 +0200
 
 bashism (0.0.2) unstable; urgency=medium
 
